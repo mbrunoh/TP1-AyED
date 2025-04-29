@@ -38,6 +38,8 @@ def login():
          system('cls')
       else:
          validacion = True
+   if validacion == False:
+      print('Haz alcanzado el limite de intentos, se cerrara el programa.')
    return validacion
 
 def menu_administrador():
@@ -139,6 +141,4 @@ def main():
       system('cls')
       menu_administrador()
       print('Gracias por usar nuestro sistema.')
-   else:
-      print('Haz alcanzado el limite de intentos, se cerrara el programa.')
 main()
