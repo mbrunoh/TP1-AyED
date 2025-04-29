@@ -33,7 +33,7 @@ def login():
       contrasena = maskpass.advpass('Ingrese la Contraseña: ')
       if user != ADMIN_USER or contrasena != ADMIN_CONTRASENA:
          intentos += 1
-         print(f'Nombre de Usuario o contraseña incorrecta. ({intentos}/3)')
+         print(f'Nombre de Usuario o Contraseña incorrecta ({intentos}/3).')
          sleep(1)
          system('cls')
       else:
