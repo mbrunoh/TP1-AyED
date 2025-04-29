@@ -11,7 +11,7 @@ from os import system
    login()
       validacion: bolean
       intentos: int
-      user, contrasena: char
+      user, contrasena: string
    menu_administrador()
       opc: int
    submenu_1()
