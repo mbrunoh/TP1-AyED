@@ -1,59 +1,37 @@
 import maskpass
-##VARIABLES USUARIOS##
-#int: codUsuario
-#string: nombreUsuario(100), claveUsuario(8), tipoUsuario(20), emailUsuario(100), telefonoUsuario(20)
-######################
+from time import sleep
+from os import system
 
-##VARIABLES AEROLINEAS#
-#int: codAerolionea
-#string: nombreAerolinea(100), codigoIATA(3), descripcionAerolinea(200), codPais(3) 
-######################
-
-##VARIABLES NOVEDADES##
-#int: codNovedad
-#string: textoNovedad(200), fechaPublicacionNovedad(10), fechExpiracionNovedad(10)  
-######################
-
-##VARIABLES EXTRA##
-#int: i, opc, opc2
-#string: nombreUsuario, claveUsuario, contra, usr
-######################
-
-###Declaraicon de Variables
-nombreUsuario = "admin@ventaspasajes777.com"
-claveUsuario = "admin"
-loginok = True
-###
-
+ADMIN_USER = "admin"
+ADMIN_CONTRASEÑA = "admin"
 
 def login():
-   i = 0
-   global loginok
-   while loginok : 
-      usr = input("Ingrese nombre de Usuario: ")
-      contra = maskpass.advpass("Ingrese la Clave: ")
-      if usr != nombreUsuario or contra != claveUsuario:
-         print("Nombre de Usuario o contraseña inexistente.")
-         i = i+1
-         if i == 3: 
-            print("Haz alcanzado el limtie de intentos, se cerrara el programa.")
-            loginok = False
+   validacion = False
+   intento = 0
+   while intentos < 3 and validacion == False: 
+      user = input('Ingrese nombre de Usuario: ')
+      contraseña = maskpass.advpass('Ingrese la Contraseña: ')
+      if user != ADMIN_USER or contraseña != ADMIN_CONTRASEÑA:
+         intento += 1
+         print(f'Nombre de Usuario o contraseña incorrecta ({intento}/3).')
       else:
-         menuAdmin()
-   
- 
+         validacion = True
+   if validacion == False:
+      print('Haz alcanzado el limtie de intentos, se cerrara el programa.')
+   else:
+      print('Gracias por usar nuestro sistema.')
+   return validacion
 
 def cartel():
    print("\n....en construcción...")
 
-def MENU():
-   print("\n........MENU PRINCIPAL.........")
+def mostrar_menu_principal():
+   print('---------- MENU PRINCIPAL ----------')
    print("1- Gestion de Aerolineas.")
    print("2- Aprobar/Denegar Promiciones")
    print("3- Gestion de Novedades")
    print("4- Reportes")
-   print("0- Salir")
-
+   print("0- Salir\n")
 
 def Submenu1():
       print("\n........Gestion de Aerolineas.........")
@@ -101,35 +79,20 @@ def MENU2():
          case 4: print(" \nVolviendo al menú principal...")
 
 def menuAdmin():
-   global loginok
    opc = 1
-   while (opc != 0):
-      MENU()
+   while (opc != 0 ):
+      mostrar_menu_principal()
       opc = int(input("Ingrese su opcion: "))
-      while (opc < 0 or opc > 4):
-         opc = int(input("Ingrese una opcion Valida: "))
-      
       match opc:
          case 1: Submenu1()  
          case 2: Submenu2()  
          case 3: Submenu3()  
          case 4: Submenu4()  
-         case 0: 
-            print("\nGracias por usar nuestro sistema")
-            loginok = False
+         case _: print('Opcion inválida!')
+
 
 ##inicio
-login()
-
-
-
-
-
-
-
-
-
-
-
-
-
+def main():
+   if login() == True:
+      menuAdmin()
+main()
