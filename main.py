@@ -2,13 +2,33 @@ import maskpass
 from time import sleep
 from os import system
 
+"""
+# Variables Globales
+   ADMIN_USER: string (CONSTANTE)
+   ADMIN_CONTRASENA: string (CONSTANTE)
+
+# Variables Locales (Por función)
+   login()
+      validacion: bolean
+      intentos: int
+      user, contrasena: char
+   menu_administrador()
+      opc: int
+   submenu_1()
+      opc: string
+   submenu_3()
+      opc: string
+   submenu_4()
+      opc: string
+"""
+
 ADMIN_USER = 'admin' # admin@ventaspasajes777.com
 ADMIN_CONTRASENA = 'admin'
 
 def login():
    validacion = False
    intentos = 0
-   while intentos < 3 and validacion == False: 
+   while intentos < 3 and validacion == False:
       user = input('Ingrese nombre de Usuario: ')
       contrasena = maskpass.advpass('Ingrese la Contraseña: ')
       if user != ADMIN_USER or contrasena != ADMIN_CONTRASENA:
@@ -18,8 +38,6 @@ def login():
          system('cls')
       else:
          validacion = True
-   if validacion == False:
-      print('Haz alcanzado el limite de intentos, se cerrara el programa.')
    return validacion
 
 def menu_administrador():
@@ -32,16 +50,15 @@ def menu_administrador():
       print('3 - Gestión de Novedades')
       print('4 - Reportes')
       print('5 - Salir\n')
-      opc = input('Ingrese su opción: ')
-      try:
-         opc = int(opc)
-      except:
+      try: # Como las opciones serán comparadas con números enteros (int), hacemos una validacion previa del dato ingresado.
+         opc = int(input('Ingrese su opción: '))
+      except: # Si no es posible converter el dato en numero, es porque el usuario ingresó una opción inválida.
          print('Opción inválida!')
          sleep(1)
       else:
          match opc:
             case 1: submenu_1()  
-            case 2: en_construccion()
+            case 2: submenu_2()
             case 3: submenu_3()  
             case 4: submenu_4()  
             case 5: pass
@@ -71,6 +88,9 @@ def submenu_1(): # Gestión de Aerolíneas
          case _:
             print('Opción inválida!')
             sleep(1)
+
+def submenu_2(): # Aprobar/Denegar Promociones
+   en_construccion()
 
 def submenu_3(): # Gestión de Novedades
    opc = ''
@@ -112,11 +132,13 @@ def submenu_4(): # Reportes
             print('Opción inválida!')
             sleep(1)
 
-# INÍCIO
+# Início
 def main():
    system('cls')
    if login() == True:
       system('cls')
       menu_administrador()
       print('Gracias por usar nuestro sistema.')
+   else:
+      print('Haz alcanzado el limite de intentos, se cerrara el programa.')
 main()
