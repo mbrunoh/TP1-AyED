@@ -4,22 +4,11 @@ from os import system
 
 """
 # Variables Globales
-   ADMIN_USER: string (CONSTANTE)
-   ADMIN_CONTRASENA: string (CONSTANTE)
+
 
 # Variables Locales (Por función)
-   login()
-      validacion: bolean
-      intentos: int
-      user, contrasena: string
-   menu_administrador()
-      opc: int
-   submenu_1()
-      opc: string
-   submenu_3()
-      opc: string
-   submenu_4()
-      opc: string
+
+
 """
 
 ADMIN_USER = 'admin' # admin@ventaspasajes777.com
@@ -28,6 +17,19 @@ ADMIN_CONTRASENA = 'admin'
 cant_ARG = 0
 cant_CHI = 0
 cant_BRA = 0
+
+cod_novedad_1 = 1
+texto_novedad_1 = ''
+fecha_publicacion_novedad_1 = ''
+fecha_expiracion_novedad_1 = ''
+cod_novedad_2 = 2
+texto_novedad_2 = ''
+fecha_publicacion_novedad_2 = ''
+fecha_expiracion_novedad_2 = ''
+cod_novedad_3 = 3
+texto_novedad_3 = ''
+fecha_publicacion_novedad_3 = ''
+fecha_expiracion_novedad_3 = ''
 
 def login():
    validacion = False
@@ -38,8 +40,6 @@ def login():
       if user != ADMIN_USER or contrasena != ADMIN_CONTRASENA:
          intentos += 1
          print(f'Nombre de Usuario o Contraseña incorrecta ({intentos}/3).')
-         sleep(1)
-         system('cls')
       else:
          validacion = True
    if validacion == False:
@@ -95,52 +95,49 @@ def submenu_1(): # Gestión de Aerolíneas
             print('Opción inválida!')
             sleep(1)
 
-def submenu_1a():
+def submenu_1a(): # Crear Aerolínea
    system('cls')
    print('---------- Gestión de Aerolíneas ----------')
    print('a - Crear Aerolínea\n')
+   opc = ''
+   while opc != 'n' and opc != 'no':
+      opc = input(f'¿Desea cadastra una nueva aerolínea? (s/n) ').lower()
+      match opc:
+         case 'no' | 'n':
+            mostrar_cantidades()
+         case 'si' | 's':
+            crear_aerolinea()
+         case _:
+            print('Opción inválida!')
+
+def crear_aerolinea():
+   system('cls')
    global cant_ARG, cant_BRA, cant_CHI
-   
-   new_aerolinea = True
-   while new_aerolinea:
-      nombre_aerolinea = input('Nombre de la Aerolínea: ')
-      val_codigoIATA = False
-      while not val_codigoIATA:
-         codigoIATA = input('Informe el código IATA (máximo 3 caracteres): ')
-         if len(codigoIATA) <= 3 and len(codigoIATA) > 0:
-            val_codigoIATA = True
-         else:
-            print('¡Código IATA inválido!')
-      val_codigoPAIS = False
-      while not val_codigoPAIS:
-         print('Informe el código del país.')
-         print('ARG - Argentina')
-         print('BRA - Brasil')
-         print('CHI - Chile')
-         codigoPAIS = input('\nCódigo: ').upper()
-         if codigoPAIS == 'ARG' or codigoPAIS == 'CHI' or codigoPAIS == 'BRA':
-            val_codigoPAIS = True
-         else:
-            print('¡Código del país inválido!')
-      match codigoPAIS:
-         case 'ARG': cant_ARG += 1
-         case 'CHI': cant_CHI += 1
-         case 'BRA': cant_BRA += 1
-
-      val_opc = False
-      while not val_opc:
-         opc = input(f'¡Aerolínea {nombre_aerolinea} cadastrada con suceso! Desea cadastra una nueva aerolínea? (s/n) ').lower()
-         match opc:
-            case 'no' | 'n':
-               val_opc = True
-               new_aerolinea = False
-            case 'si' | 's':
-               pass
-               val_opc = True
-            case _:
-               print('Opción inválida!')
-   mostrar_cantidades()
-
+   nombre_aerolinea = input('Nombre de la Aerolínea: ')
+   val_codigoIATA = False
+   while not val_codigoIATA:
+      codigoIATA = input('Informe el código IATA (máximo 3 caracteres): ')
+      if len(codigoIATA) <= 3 and len(codigoIATA) > 0:
+         val_codigoIATA = True
+      else:
+         print('¡Código IATA inválido!')
+   val_codigoPAIS = False
+   while not val_codigoPAIS:
+      print('Informe el código del país.')
+      print('ARG - Argentina')
+      print('BRA - Brasil')
+      print('CHI - Chile')
+      codigoPAIS = input('\nCódigo: ').upper()
+      if codigoPAIS == 'ARG' or codigoPAIS == 'CHI' or codigoPAIS == 'BRA':
+         val_codigoPAIS = True
+      else:
+         print('¡Código del país inválido!')
+   match codigoPAIS:
+      case 'ARG': cant_ARG += 1
+      case 'CHI': cant_CHI += 1
+      case 'BRA': cant_BRA += 1
+   print(f'¡Aerolinea {nombre_aerolinea} cadastrada con suceso!')
+      
 def mostrar_cantidades():
    system('cls')
    # Cantidades diferentes
@@ -202,13 +199,81 @@ def submenu_3(): # Gestión de Novedades
       opc = input('Ingrese su opción: ')
       match opc:
          case 'a': en_construccion()
-         case 'b': en_construccion() 
+         case 'b': submenu_3b() 
          case 'c': en_construccion()
-         case 'd': en_construccion() 
+         case 'd': submenu_3d()
          case 'e': pass
          case _:
             print('Opción inválida!')
             sleep(1)
+
+def submenu_3b(): # Modificar Novedad
+   opc = ''
+   while (opc != '0'):
+      system('cls')
+      print('---------- Gestión de Novedades ----------')
+      print('Modificar Novedad\n\n')
+      print('¿Cual novedades desea modificar?')
+      print(f'1 - {texto_novedad_1[:25]}')
+      print(f'2 - {texto_novedad_2[:25]}')
+      print(f'3 - {texto_novedad_3[:25]}\n')
+      print(f'0 - Volver\n')
+      opc = input('Novedades: ')
+      match opc:
+         case '1': modificar_novedad(cod_novedad_1)
+         case '2': modificar_novedad(cod_novedad_2)
+         case '3': modificar_novedad(cod_novedad_3)
+         case '0': pass
+         case _:
+            print('Opción inválida!')
+            sleep(1)
+
+def modificar_novedad(cod_novedad):
+   global cod_novedad_1, cod_novedad_2, cod_novedad_3
+   global texto_novedad_1, texto_novedad_2, texto_novedad_3
+   global fecha_publicacion_novedad_1, fecha_publicacion_novedad_2, fecha_publicacion_novedad_3
+   global fecha_expiracion_novedad_1, fecha_publicacion_novedad_2, fecha_publicacion_novedad_3
+   system('cls')
+   print(f'Modificando la novedad {cod_novedad}\n')
+   nuevo_texto = input('Nuevo texto de la novedad: ')
+   nueva_fecha_publicacion = input('Nueva fecha de publicación: ')
+   nueva_fecha_expiracion = input('Nueva fecha de expiración: ')
+   match cod_novedad:
+      case 1:
+         texto_novedad_1 = nuevo_texto
+         fecha_publicacion_novedad_1 = nueva_fecha_publicacion
+         fecha_expiracion_novedad_1 = nueva_fecha_expiracion
+      case 2:
+         texto_novedad_2 = nuevo_texto
+         fecha_publicacion_novedad_2 = nueva_fecha_publicacion
+         fecha_expiracion_novedad_2 = nueva_fecha_expiracion
+      case 3:
+         texto_novedad_3 = nuevo_texto
+         fecha_publicacion_novedad_3 = nueva_fecha_publicacion
+         fecha_expiracion_novedad_3 = nueva_fecha_expiracion
+   print(f'¡Novedad COD {cod_novedad} modificada con suceso!')
+   pass_var = input('\nPresione una tecla para continuar... ')
+
+def submenu_3d(): # Ver Novedades
+   system('cls')
+   if texto_novedad_1 != '':
+      print(f'COD: {cod_novedad_1}')
+      print(f'{texto_novedad_1}')
+      print(f'Publicación: {fecha_publicacion_novedad_1}')
+      print(f'Expiración: {fecha_expiracion_novedad_1}')
+   if texto_novedad_2 != '':
+      print(f'COD: {cod_novedad_2}')
+      print(f'{texto_novedad_2}')
+      print(f'Publicación: {fecha_publicacion_novedad_2}')
+      print(f'Expiración: {fecha_expiracion_novedad_2}')
+   if texto_novedad_3 != '':
+      print(f'COD: {cod_novedad_3}')
+      print(f'{texto_novedad_3}')
+      print(f'Publicación: {fecha_publicacion_novedad_3}')
+      print(f'Expiración: {fecha_expiracion_novedad_3}')
+   if texto_novedad_1 == '' and texto_novedad_2 == '' and texto_novedad_3 == '':
+      print('Hay 3 novedades cadastradas, pero aun no fueron definidas, hay que modificarlas.')
+   pass_var = input('\nPresione una tecla para continuar... ')
 
 def submenu_4(): # Reportes
    opc = ''
