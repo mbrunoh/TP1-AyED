@@ -181,7 +181,7 @@ def mostrar_cantidades():
    # Todos con la misma cantidad
    else:
       print(f'Argentina, Brasil y Chile tienen la misma cantidad de aerolínea, {cant_ARG} cada.')
-   pass_var = input('\nPresione una tecla para continuar... ')
+   input('\nPresione una tecla para continuar... ')
 
 def submenu_2(): # Aprobar/Denegar Promociones
    en_construccion()
@@ -252,7 +252,7 @@ def modificar_novedad(cod_novedad):
          fecha_publicacion_novedad_3 = nueva_fecha_publicacion
          fecha_expiracion_novedad_3 = nueva_fecha_expiracion
    print(f'¡Novedad COD {cod_novedad} modificada con suceso!')
-   pass_var = input('\nPresione una tecla para continuar... ')
+   input('\nPresione una tecla para continuar... ')
 
 def submenu_3d(): # Ver Novedades
    system('cls')
@@ -273,7 +273,7 @@ def submenu_3d(): # Ver Novedades
       print(f'Expiración: {fecha_expiracion_novedad_3}')
    if texto_novedad_1 == '' and texto_novedad_2 == '' and texto_novedad_3 == '':
       print('Hay 3 novedades cadastradas, pero aun no fueron definidas, hay que modificarlas.')
-   pass_var = input('\nPresione una tecla para continuar... ')
+   input('\nPresione una tecla para continuar... ')
 
 def submenu_4(): # Reportes
    opc = ''
